@@ -11,3 +11,25 @@ SECRET_KEY = 'Q9bw#3$567$@qsdf'
 DEBUG = False # This was set to false to activate production mode
 
 ALLOWED_HOSTS = ['*']
+
+INSTALLED_APPS = [
+   'django.contrib.admin',
+   'django.contrib.auth', 
+   'django.contrib.contenttypes',
+   'django.contrib.session',
+   'django.contrib.messages',
+   'django.contrib.staticfiles'
+   'delivery', # My Delivery App
+   'users', # Users App
+]
+MIDDLEWARE = [
+  'django.middleware.security.SecurityMiddleware',
+  'django.contrib.sessions.middleware.SessionMiddleware',
+  'django.middleware.common.CommonMiddleware',
+  'django.middleware.csrf.CsrfViewMiddleware',
+  'django.contrib.messages.middleware.AuthenticationMiddleware'
+  'django.contrib.messages.middleware.MessageMiddleware',
+  'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+ROOT_URLCONF = 'config.urls'
