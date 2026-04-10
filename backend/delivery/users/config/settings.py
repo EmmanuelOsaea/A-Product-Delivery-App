@@ -8,4 +8,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'Q9bw#3$567$@qsdf'
 
 # SECRET_KEY = keep the secret key used in production secret!
-DEBUG
+DEBUG = False # This was set to false to activate production mode
+
+ALLOWED_HOSTS = ['*']
