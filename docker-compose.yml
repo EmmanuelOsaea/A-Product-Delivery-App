@@ -1,1 +1,25 @@
-h
+version: "3.9"
+
+services:
+db:
+ image: postgres:16-alphine
+ environment:
+ POSTGRES_DB: ${POSTGRES_DB}
+ POSTGRES_USER: ${POSTGRES_USER}
+ POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+ ports:
+ - "5432:5432"
+ volumes:
+ - pgdata:/var/lib/postgresql/data
+ healthcheck:
+  test: ["CMD-SHELL", "pg_is ready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+  interval: 14s
+  timeout: 7s
+  retries: 12
+
+  redis:
+  image: redis:7-alphine
+  ports: 
+    - "6379:6379"
+   command: ["redis-server", "--appendonly", "yes"]
+   volumes:
