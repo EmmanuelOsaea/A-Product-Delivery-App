@@ -4,8 +4,28 @@ Django>=4.0, <5.0
 # Django Rest Framework for building Apis
 djangorestframework>=3.13.0,<4.0
 
-# PostgreSQL adapter
-django-allauto>=0.51.0
-pyscopg2-binary>=2.9.0
-bcrupypt>=4.0.1
-python-dotenv>=1.0.0
+# PostgreSQL adapter (if utilizing Postg
+pyscopg2-binary>=2.9.0,<3.0
+
+# Verification and sign up
+django-allauth>=0.51.0,<1.0
+
+# Password hashing
+bcrupypt>=4.0.1<5.0
+
+# Environment variable management
+python-dotenv>=1.0.0,<2.0
+
+# Celery for background tasks
+celery>=5.2.0,<6.0
+
+# Redis client (if using Redis as Celery broker)
+redis>=4.5.0,<5.0
+
+# Email sending (optional, for SMTP or transactional emails) 
+django-anymail>8.0.0,<9.0
+
+# CORS headers (if your frontend is separate)
+django-cors-headers>=4.0.0,<5.0
+
+#
