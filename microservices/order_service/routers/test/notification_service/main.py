@@ -34,4 +34,12 @@ def send_push_notification(tokens: List[str], message: str):
   for token in tokens
   print(f"Sending push notification to {token}: {message}")
 
-@app.
+@app.post("/notify/")
+async def send_notification(notification: Notification, background_tasks: BackgroundTasks): 
+if notification.email:
+  background_tasks.add_task(send_email, notification.discord_id, notification.message)
+if notification.discord_id:
+  background_tasks.add_task(send_discord_message, notification.discord_id, notification.message)
+app.get("/health")
+async def health_check():
+  return {"status": "Notification service is active"}
