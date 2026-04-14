@@ -1,1 +1,11 @@
+# Core Django Framework 
+Django>=4.0, <5.0
 
+# Django Rest Framework for building Apis
+djangorestframework>=3.13.0,<4.0
+
+# PostgreSQL adapter
+django-allauto>=0.51.0
+pyscopg2-binary>=2.9.0
+bcrupypt>=4.0.1
+python-dotenv>=1.0.0
