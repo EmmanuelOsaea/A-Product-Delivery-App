@@ -23,3 +23,37 @@ db:
     - "6379:6379"
    command: ["redis-server", "--appendonly", "yes"]
    volumes:
+     - redisdata:/data
+   healthcheck:
+   test: ["CMD", "redis-cli", "ping"]
+   interval: 14s
+   timeout: 5s
+   retries: 14
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ condition:service_healthy
+  notification_service:
+  build: 
+  context: ./microservices/notification_service
+  dockerfile: Dockerfile
+  env_file:
+  - ./.env
+  environment: 
+  NOTIFY_API_TOKEN: ${NOTIFY_API_TOKEN}
+    ports:
+    - "${NOTIFY_SERVICE_PORT}:8010"
+   depends-on:
+     - backend
+    
+   volumes:
+   pgdata:
+   redisdata:
