@@ -1,36 +1,40 @@
 version: "3.9"✓
 
 services:
-db:
- image: postgres:16-alpine
- environment:
- POSTGRES_DB: ${POSTGRES_DB}
- POSTGRES_USER: ${POSTGRES_USER}
- POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
- ports:
- - "5432:5432"
- volumes:
- - pgdata:/var/lib/postgresql/data
- healthcheck:
-  test: ["CMD-SHELL", "pg_is ready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-  interval: 14s
-  timeout: 7s
-  retries: 12
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_is ready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 14s
+      timeout: 7s
+      retries: 12
 
   redis:
-  image: redis:7-alpine
-  ports: 
-    - "6379:6379"
-   command: ["redis-server", "--appendonly", "yes"]
-   volumes:
-     - redisdata:/data
-   healthcheck:
-   test: ["CMD", "redis-cli", "ping"]
-   interval: 14s
-   timeout: 5s
-   retries: 14
+    image: redis:7-alpine
+    ports: 
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 14s
+      timeout: 5s
+      retries: 14
 
-  env_file:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
   - ./.env
 environment:
   POSTGRES_HOST: db
@@ -44,12 +48,12 @@ ports:
    redis: 
      condition: service_healthy
   
-  notification_service:
-    build: 
-      context: ./microservices/notification_service
-      dockerfile: Dockerfile
-    env_file:
-      - ./.env
+notification_service:
+  build: 
+    context: ./microservices/notification_service
+    dockerfile: Dockerfile
+  env_file:
+    - ./.env
   environment: 
     NOTIFY_API_TOKEN: ${NOTIFY_API_TOKEN}
   ports:
