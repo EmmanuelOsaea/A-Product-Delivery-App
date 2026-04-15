@@ -20,4 +20,10 @@ def validate_discord_id(cls, s):
       return s
 
 class NotificationResponse(NotificationBase):
-  
+  email: Optional[EmailStr] = None
+  discord_id: Optional[str] = None
+  push_tokens: Optional[List[str]] = []
+
+class Config:
+   orm_mode = True
+
