@@ -12,3 +12,21 @@ selector:
       app: backend
   spec:
     containers:
+      - name: backend
+        image: 
+        ports:
+          - containerPort: 8000
+       envFrom:
+         - secretRef:
+             name: backend-secrets
+         - configMapRef:
+              name: backend-config
+       readinessProbe:
+          httpGet:
+             path: /health
+             port: 8000
+           initialDelaySeconds:
+           periodSeconds:
+           failureThresold:
+         livenessProbe:
+         
