@@ -1,1 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracking-deployment
+  labels:
+    app: tracking
+spec:
+replicas: 6
+selector: 
+  matchLabels:
+    labels:
+      app: tracking
+  spec:
+    containers:
+      - name: tracking
+        image: emmanu1467/backend:latest
+        ports:
+          - containerPort: 8080
+       envFrom:
+         - secretRef:
+             name: tracking-secrets
+         - configMapRef:
+              name: tracking-config
+        readinessProbe:
+          httpGet:
+             path: /health
+             port: 8080
+           initialDelaySeconds: 13
+           periodSeconds: 13
+           failureThresold: 5
+         livenessProbe:
+           httpGet:
+             path: /health
+             port: 8080
+           initialDelaySeconds: 33
+           periodSeconds: 23
+           failureThresold: 7
+           resources:
+             requests:
+               cpu: "260m"
+               memory: "515Mi"
+             limits:
+               cpu: "2"
+               memory: "2Gi"
+       restartPolicy: Always
 
