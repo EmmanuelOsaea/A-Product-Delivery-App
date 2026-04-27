@@ -26,7 +26,8 @@ class Order(models.Model):
         ('locker' 'Locker')
         ('truck' 'Truck')
     ]
- 
+
+delivery_mode = models.CharField(max_length= 25, choices=DELIVERY_MODES, default='bike')
 client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='orders')
 order_date = models.DateTimeField(auto_now_add=True)
 status = models.CharField(max_length= 25 , choices=STATUS_CHOICES, default= '5')
